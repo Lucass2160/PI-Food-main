@@ -3,12 +3,12 @@ const axios = require("axios");
 const getRecipeById = async (id, API_KEY) => {
   try {
     const response = await axios.get(
-      `https://api.spoonacular.com/recipes/{id}/information?apiKey=${API_KEY}`
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
     );
-    const recipeData = responde.data;
+    const recipeData = response.data;
     const recipe = {
       id: recipeData.id,
-      title: recipeData.title,
+      name: recipeData.title,
       image: recipeData.image,
       summary: recipeData.summary,
       healScore: recipeData.healScore,
