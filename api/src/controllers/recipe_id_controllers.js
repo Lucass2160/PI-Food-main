@@ -1,23 +1,39 @@
 const axios = require("axios");
+const { Router } = require("express");
+const recipesModelsId = Router();
+const { Recipe } = require("../db");
 
-const getRecipeById = async (id, API_KEY) => {
+recipesModelsId.get("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const response = await axios.get(
-      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
-    );
-    const recipeData = response.data;
-    const recipe = {
-      id: recipeData.id,
-      name: recipeData.title,
-      image: recipeData.image,
-      summary: recipeData.summary,
-      healScore: recipeData.healScore,
-      instruction: recipeData.instruction,
-    };
-    return recipe;
+    if (id.includes("-")) {
+      const dbRecipe = await Recipe.findOne({ where: { id: id } });
+      const recipe = {
+        id: dbRecipe.id,
+        name: dbRecipe.title,
+        image: dbRecipe.image,
+        summary: dbRecipe.summary,
+        healScore: dbRecipe.healScore,
+        instruction: dbRecipe.instruction,
+      };
+      res.status(200).json(recipe);
+    } else {
+      const { data } = await axios(
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=1ca2f2e0158a4007b974f8038badf39c`
+      );
+      const recipe = {
+        id: data.id,
+        name: data.title,
+        image: data.image,
+        summary: data.summary,
+        healScore: data.healthScore,
+        instruction: data.instructions,
+      };
+      res.status(200).json(recipe);
+    }
   } catch (error) {
-    throw new Error("Error al obtener la receta desde la API");
+    res.status(404).json({ error: error.message });
   }
-};
+});
 
-module.exports = getRecipeById;
+module.exports = recipesModelsId;
