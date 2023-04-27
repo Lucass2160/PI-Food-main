@@ -25,9 +25,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    instructions: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    steps: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
     },
   });
 };
