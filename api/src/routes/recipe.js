@@ -1,12 +1,14 @@
 const { Router } = require("express");
-const router = Router();
-const { Recipe, Diet } = require("../db");
-const getIdRecipes = require("../controllers/recipe.js");
+const recipeRouter = Router();
+const { Recipe, Diets } = require("../db");
+const {
+  getRecipeByID,
+  postRecipe,
+  getRecipeByName,
+} = require("../handlers/recipe");
 
-router.get("/:id", async (req, res, next) => {
-  const id = req.params.id;
-  const idRecipe = await getIdRecipes(id, next);
-  return res.send(idRecipe);
-});
+recipeRouter.get("/:id", getRecipeByID);
+recipeRouter.get("/", getRecipeByName);
+recipeRouter.post("/", postRecipe);
 
-module.exports = router;
+module.exports = recipeRouter;

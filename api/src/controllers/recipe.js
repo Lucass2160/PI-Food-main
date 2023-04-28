@@ -1,47 +1,90 @@
 const axios = require("axios");
-const { Recipe, Diet } = require("../db");
+const { Recipe, Diets } = require("../db");
+const { dbApi } = require("../controllers/mapeos");
 const { API_KEY } = process.env;
 
-const getIdRecipes = async (id, next) => {
+const getIdRecipeController = async (id) => {
   if (id.includes("-")) {
-    try {
-      const dbRecipe = await Recipe.findOne({ where: { id: id } });
-      return {
-        id: dbRecipe.id,
-        name: dbRecipe.title,
-        image: dbRecipe.image,
-        diets: dbRecipe.diets,
-        summary: dbRecipe.summary,
-        healScore: dbRecipe.healScore,
-        diets: dbRecipe.diets?.map((e) => e.name),
-      };
-    } catch (error) {
-      next(error);
-    }
+    const dbRecipe = await Recipe.findByPk(id, {
+      include: {
+        model: Diets,
+        attributes: ["name"],
+      },
+    });
+    return {
+      id: dbRecipe.id,
+      name: dbRecipe.title,
+      steps: dbRecipe.steps,
+      image: dbRecipe.image,
+      summary: dbRecipe.summary,
+      healthScore: dbRecipe.healScore,
+    };
   } else {
-    try {
-      const { data } = await axios(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=1ca2f2e0158a4007b974f8038badf39c`
-      );
-      return {
-        id: data.id,
-        name: data.title,
-        image: data.image,
-        diets: data.diets,
-        summary: data.summary,
-        healScore: data.healthScore,
-        diets: data.diets,
-        steps: data.analyzedInstructions[0]?.steps.map((e) => {
-          return {
-            number: e.number,
-            step: e.step,
-          };
-        }),
-      };
-    } catch (error) {
-      next(error);
-    }
+    const { data } = await axios(
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+    );
+    return {
+      id: data.id,
+      name: data.title,
+      image: data.image,
+      summary: data.summary,
+      healScore: data.healthScore,
+      steps: data.analyzedInstructions[0]?.steps.map((e) => {
+        return {
+          number: e.number,
+          step: e.step,
+        };
+      }),
+    };
   }
 };
 
-module.exports = getIdRecipes;
+const postRecipeController = async (objRecipe) => {
+  try {
+    const { name, summary, healthScore, steps, image, diets } = objRecipe;
+    const recipe = {
+      name,
+      image,
+      healthScore,
+      summary,
+      steps,
+      diets,
+    };
+
+    const dietInfo = await Diets.findAll({
+      where: {
+        name: diets,
+      },
+    });
+    const createRecipe = await Recipe.create(recipe);
+    createRecipe.addDiets(dietInfo);
+
+    return Recipe.findAll();
+  } catch (error) {
+    throw Error("No se creo");
+  }
+};
+
+const getNameRecipeController = async (name) => {
+  try {
+    if (name) {
+      const searchRecipe = await dbApi();
+      const result = searchRecipe.filter((element) =>
+        element.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (result.length) return result;
+    } else {
+      const all = await dbApi();
+      return all;
+    }
+    throw new Error(`We don't have data about this recipe`);
+  } catch (error) {
+    return error.message;
+  }
+};
+
+module.exports = {
+  getIdRecipeController,
+  postRecipeController,
+  getNameRecipeController,
+};

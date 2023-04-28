@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true,
     },
     name: {
@@ -14,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     image: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     summary: {
@@ -26,7 +27,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     steps: {
-      type: DataTypes.ARRAY(DataTypes.JSONB),
+      type: DataTypes.STRING,
     },
   });
 };
