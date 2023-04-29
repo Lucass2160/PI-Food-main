@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { Recipe, Diets } = require("../db");
 const { dbApi } = require("../controllers/mapeos");
+const { where } = require("sequelize");
 const { API_KEY } = process.env;
 
 const getIdRecipeController = async (id) => {
@@ -48,18 +49,16 @@ const postRecipeController = async (objRecipe) => {
       healthScore,
       summary,
       steps,
-      diets,
     };
 
-    const dietInfo = await Diets.findAll({
-      where: {
-        name: diets,
-      },
-    });
     const createRecipe = await Recipe.create(recipe);
-    createRecipe.addDiets(dietInfo);
 
-    return Recipe.findAll();
+    for (let diet of diets) {
+      const dieta = await Diets.findAll({ where: { name: diet } });
+      await createRecipe.addDiets(dieta);
+    }
+
+    return createRecipe;
   } catch (error) {
     throw Error("No se creo");
   }

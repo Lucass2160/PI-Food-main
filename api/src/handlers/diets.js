@@ -1,12 +1,14 @@
-const getDietsController = require("../controllers/diets.js");
+const { getDiets } = require("../controllers/diets");
 
-const getDiets = async (req, res) => {
+const getDietsHandler = async (req, res) => {
   try {
-    const allDiets = await getDietsController();
-    res.status(200).json(allDiets);
+    const dietas = await getDiets();
+    return res.status(200).json(dietas);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = getDiets;
+module.exports = {
+  getDietsHandler,
+};

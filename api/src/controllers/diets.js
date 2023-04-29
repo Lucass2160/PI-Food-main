@@ -1,8 +1,31 @@
+const { API_KEY } = process.env;
 const axios = require("axios");
-const { Recipe, Diets } = require("../db");
+const { Diets } = require("../db");
 
-const getDietsController = async () => {
-  const peticion = await axios(
-    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
-  );
+const getDiets = async (req, res) => {
+  try {
+    const apiDietsRaw = (
+      await axios.get(
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
+      )
+    ).data.results;
+
+    let dietasRepetidas = await apiDietsRaw.map((elem) => elem.diets).flat(1);
+
+    let dietas = [...new Set(dietasRepetidas)];
+
+    dietas.map(async (dietName) => {
+      await Diets.findOrCreate({
+        where: { name: dietName },
+      });
+    });
+
+    return dietas;
+  } catch (error) {
+    throw new Error("Se acabaron las apikey disponibles");
+  }
+};
+
+module.exports = {
+  getDiets,
 };
