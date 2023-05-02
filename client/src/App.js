@@ -1,9 +1,18 @@
-import './App.css';
+import "./App.css";
+import Home from "./views/Home/Home";
+import Lading from "./views/Lading/Lading";
+import { Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <h1>Henry Food</h1>
+      <Route>
+        <Lading path="/home" />
+      </Route>
+
+      <Route>
+        <Home path="/" />
+      </Route>
     </div>
   );
 }
