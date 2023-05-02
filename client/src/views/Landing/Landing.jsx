@@ -1,4 +1,4 @@
-const Lading = () =>{
+const Landing = () =>{
     return(
         <>
         <h1>Vista del Landing</h1>
@@ -6,4 +6,4 @@ const Lading = () =>{
     )
 }
 
-export default Lading
+export default Landing
