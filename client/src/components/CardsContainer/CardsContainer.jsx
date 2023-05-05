@@ -24,13 +24,12 @@ const CardsContainer = () => {
         return <>
         <div>
         <Card
-        id = {recipes.id}
         name = {recipes.name}
         image = {recipes.image}
         diets = {recipes.diets}
         />
         
-        <button>{<Link to={`/recipes/${recipes.id}`}>Saber mas</Link>}</button> 
+        {<Link to={`/recipes/${recipes.id}`}>Saber mas</Link>}
         
         </div>
         

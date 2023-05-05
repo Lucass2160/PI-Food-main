@@ -3,7 +3,7 @@ import { GET_RECIPE_DETAIL } from "./actions";
 
 const initialState = {
   recipes: [],
-  details: {},
+  details: [],
 };
 
 const rootReducer = (state = initialState, action) => {

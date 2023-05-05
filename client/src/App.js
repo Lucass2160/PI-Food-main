@@ -1,5 +1,6 @@
 import "./App.css";
-import { Home, Form, Landing, Detail } from "./views";
+import { Home, Form, Landing } from "./views";
+import Details from "./components/Details/Details";
 import NavBar from "./components/NavBar/NavBar";
 import { Route, useLocation } from "react-router-dom";
 
@@ -17,7 +18,7 @@ function App() {
       </Route>
 
       <Route exact path={`/recipes/:id`}>
-        <Detail />
+        <Details />
       </Route>
 
       <Route path="/home">
