@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import  {getRecipes}  from "../../redux/actions";
 
 const Home = () => {
+
+  
   const dispatch = useDispatch();
   useEffect(() => {
      console.log(getRecipes())

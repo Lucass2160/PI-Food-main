@@ -1,44 +1,65 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Form = () => {
+  const diets = [
+    "gluten free",
+    "dairy free",
+    "lacto ovo vegetarian",
+    "vegan",
+    "paleolithic",
+    "primal",
+    "whole 30",
+    "pescatarian",
+    "ketogenic",
+    "fodmap friendly",
+  ];
   const [form, setForm] = useState({
     titulo: "",
     puntuacion: "",
     resumen: "",
     imagen: "",
-    dietas: "",
+    dietas: [],
     pasos: "",
   });
 
+  console.log(form);
+
   const changeHandler = (event) => {
     const property = event.target.name;
+
     const value = event.target.value;
 
     setForm({ ...form, [property]: value });
   };
 
-  const [errors, setErrors] = useState({
-    titulo: "",
-    puntuacion: "",
-    resumen: "",
-    imagen: "",
-    dietas: "",
-    pasos: "",
-  });
+  const [check, setCheck] = useState([])
 
 
+  const changeHandlerDietas = (event) => {
+    const value = event.target.value;
 
-  const validate = (form) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.text(form.titulo)) {
-      console.log("error");
+    if (event.target.checked) {
+      setCheck([...check, value]);
     } else {
-      console.log("email valido");
+      setCheck(check.filter((item) => item !== value));
     }
+ 
+    
+  };
+
+  
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:3001/recipes", form)
+      .then((res) => alert(res));
   };
 
   return (
     <>
-      <form>
+      <form onSubmit={submitHandler}>
         <div>
           <label>Titulo:</label>
           <input
@@ -77,12 +98,19 @@ const Form = () => {
         </div>
         <div>
           <label>Dietas:</label>
-          <input
-            type="text"
-            value={form.dietas}
-            onChange={changeHandler}
-            name="dietas"
-          />
+          {diets.map((diet) => {
+            return (
+              <>
+                <label>{diet}</label>
+                <input
+                  type="checkbox"
+                  value={diet}
+                  onChange={changeHandlerDietas}
+                  name={diet}
+                />
+              </>
+            );
+          })}
         </div>
         <div>
           <label>Pasos:</label>
@@ -95,10 +123,7 @@ const Form = () => {
         </div>
         <button type="submit">ENVIAR</button>
       </form>
-
-      
     </>
-
   );
 };
 

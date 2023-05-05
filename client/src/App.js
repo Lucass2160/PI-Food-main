@@ -16,7 +16,7 @@ function App() {
         <Form />
       </Route>
 
-      <Route exact path="/detail">
+      <Route exact path={`/recipes/:id`}>
         <Detail />
       </Route>
 

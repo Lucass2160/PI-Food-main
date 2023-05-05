@@ -54,7 +54,7 @@ const postRecipeController = async (objRecipe) => {
     const createRecipe = await Recipe.create(recipe);
 
     for (let diet of diets) {
-      const dieta = await Diets.findAll({ where: { name: diet } });
+      const dieta = await Diets.findOne({ where: { name: diet } });
       await createRecipe.addDiets(dieta);
     }
 

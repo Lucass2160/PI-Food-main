@@ -10,7 +10,7 @@ const getDiets = async (req, res) => {
       )
     ).data.results;
 
-    let dietasRepetidas = await apiDietsRaw.map((elem) => elem.diets).flat(1);
+    let dietasRepetidas = apiDietsRaw.map((elem) => elem.diets).flat(1);
 
     let dietas = [...new Set(dietasRepetidas)];
 

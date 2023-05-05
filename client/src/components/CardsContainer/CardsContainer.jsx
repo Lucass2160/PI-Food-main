@@ -1,8 +1,7 @@
 import Card from "../Card/Card"
 import { useSelector } from "react-redux";
 import { useState } from "react";
-
-
+import { Link } from "react-router-dom";
 
 const CardsContainer = () => {
   const recipes = useSelector((state) => state.recipes);
@@ -22,11 +21,20 @@ const CardsContainer = () => {
     <>
     <div>
       {filterRecipes.map((recipes) => {
-        return <Card
+        return <>
+        <div>
+        <Card
+        id = {recipes.id}
         name = {recipes.name}
         image = {recipes.image}
-        summary = {recipes.summary}
+        diets = {recipes.diets}
         />
+        
+        <button>{<Link to={`/recipes/${recipes.id}`}>Saber mas</Link>}</button> 
+        
+        </div>
+        
+        </>
       })}
 
       
