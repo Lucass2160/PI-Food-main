@@ -4,9 +4,11 @@ const { Diets } = require("../db");
 
 const getDiets = async (req, res) => {
   try {
+    //https://run.mocky.io/v3/84b3f19c-7642-4552-b69c-c53742badee5
+    //https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true
     const apiDietsRaw = (
       await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
+        `https://run.mocky.io/v3/84b3f19c-7642-4552-b69c-c53742badee5`
       )
     ).data.results;
 

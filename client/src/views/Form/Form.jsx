@@ -1,19 +1,25 @@
 import { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getAllDiet } from "../../redux/actions";
+
+
 
 const Form = () => {
-  const diets = [
-    "gluten free",
-    "dairy free",
-    "lacto ovo vegetarian",
-    "vegan",
-    "paleolithic",
-    "primal",
-    "whole 30",
-    "pescatarian",
-    "ketogenic",
-    "fodmap friendly",
-  ];
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+     console.log(getAllDiet())
+    dispatch(getAllDiet());
+  }, [dispatch]);
+
+
+  const data = useSelector((state) => state.diets);
+
+  console.log(data);
+
   const [form, setForm] = useState({
     titulo: "",
     puntuacion: "",
@@ -33,8 +39,7 @@ const Form = () => {
     setForm({ ...form, [property]: value });
   };
 
-  const [check, setCheck] = useState([])
-
+  const [check, setCheck] = useState([]);
 
   const changeHandlerDietas = (event) => {
     const value = event.target.value;
@@ -44,17 +49,11 @@ const Form = () => {
     } else {
       setCheck(check.filter((item) => item !== value));
     }
- 
-    
   };
-
-  
 
   const submitHandler = (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3001/recipes", form)
-      .then((res) => alert(res));
+    axios.post("http://localhost:3001/recipes", form).then((res) => alert(res));
   };
 
   return (
@@ -98,9 +97,10 @@ const Form = () => {
         </div>
         <div>
           <label>Dietas:</label>
-          {diets.map((diet) => {
+          {data.map((diet) => {
             return (
               <>
+                {console.log(data)}
                 <label>{diet}</label>
                 <input
                   type="checkbox"

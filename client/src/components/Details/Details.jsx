@@ -1,39 +1,39 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import getPageDetail from "../../redux/actions";
 
 function Details() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    dispatch(getPageDetail(id));
-  }, [dispatch]);
+    const fetchData = async () => {
+      await dispatch(getPageDetail(id));
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [dispatch, id]);
 
   const data = useSelector((state) => state.details);
-  console.log(data)
 
-
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
       {console.log(data)}
-      {data.map((e) => (
-        <div key={e.id}>
-          <h1>{e.name}</h1>
-          <span>{e.healthScore}</span>
+        <div key={data.id}>
+          <h1>{data.name}</h1>
+          <span>{data.healthScore}</span>
           <p>Diets</p>
-          <div>
-            {e.diets.map((d) => (
-              <div key={d.id}>
-                <p>{d.name}</p>
-              </div>
-            ))}
-          </div>
+          <img src={data.image} alt="" />
+          <p>{data.summary}</p>
+
         </div>
-      ))}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import  {getRecipes}  from "../../redux/actions";
+import SearchBar from "../../components/SearchBar/SerachBar";
 
 const Home = () => {
 
@@ -14,8 +15,11 @@ const Home = () => {
 
   return (
     <>
+      
       <h1>Vista del Home</h1>
+      <SearchBar/>
       <CardsContainer />
+      
     </>
   );
 };
