@@ -1,14 +1,20 @@
-import { Link } from "react-router-dom"
-import style from "./NavBar.module.css"
+import { Link } from "react-router-dom";
+import "./navbar.css";
 
+const NavBar = () => {
+  return (
+    <div className="mainContainer">
+      <Link className="link" to="/">
+        Lading
+      </Link>
+      <Link className="link" to="/home">
+        Home
+      </Link>
+      <Link className="link" to="/create">
+        Form
+      </Link>
+    </div>
+  );
+};
 
-const NavBar = ()=> {
-    return(
-        <div className={style.mainContainer}>
-            <Link to="/home">Home</Link>
-            <Link to="/create">Form</Link>
-        </div>
-        )
-}
-
-export default NavBar
+export default NavBar;
