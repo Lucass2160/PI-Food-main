@@ -4,6 +4,13 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllDiet } from "../../redux/actions";
+import "./form.css";
+import {
+  validarFoto,
+  validarResumen,
+  validarNumero,
+  validarDietas,
+} from "../../views/Home/validacion/Validation";
 // import validation from "./validaciones";
 
 const Form = () => {
@@ -58,72 +65,86 @@ const Form = () => {
 
   return (
     <>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label>Titulo:</label>
-          <input
-            type="text"
-            value={form.name}
-            onChange={changeHandler}
-            name="name"
-          />
+      <div className="containerPrincipal">
+        <form className="subcontainerIzquierdo" onSubmit={submitHandler}>
+          <div className="mincontainer">
+            <label className="name">Recipe name:</label>
+            <input
+              type="text"
+              value={form.name}
+              onChange={changeHandler}
+              name="name"
+              className="input"
+            />
+          </div>
+          <div className="mincontainer">
+            <label className="name">Health Score:</label>
+            <input
+              type="range"
+              max={100}
+              min={1}
+              value={form.healthScore}
+              onChange={changeHandler}
+              name="healthScore"
+              className="input"
+            />
+          </div>
+          <div className="mincontainer">
+            <label className="name">Summary:</label>
+            <input
+              type="text"
+              value={form.summary}
+              onChange={changeHandler}
+              name="summary"
+              className="input"
+            />
+          </div>
+          <div className="mincontainer">
+            <label className="name">Image:</label>
+            <input
+              type="text"
+              value={form.image}
+              onChange={changeHandler}
+              name="image"
+              className="input"
+            />
+          </div>
+          <div className="check">
+            <label></label>
+          </div>
+          <div className="mincontainer">
+            <label className="name">Steps:</label>
+            <input
+              type="text"
+              value={form.steps}
+              onChange={changeHandler}
+              name="steps"
+              className="input"
+            />
+          </div>
+          <div className="checkBox">
+            {data.map((diet) => {
+              return (
+                <div className="checkchic">
+                  <input
+                    type="checkbox"
+                    value={diet}
+                    onChange={changeHandlerDietas}
+                    name="diets"
+                  />
+                  <label>{diet}</label>
+                </div>
+              );
+            })}
+          </div>
+          <button className="enviar" type="submit">
+            ENVIAR
+          </button>
+        </form>
+        <div className="subcontainerDerecho">
+          <img src="../../img/food.png" alt="" />
         </div>
-        <div>
-          <label>Puntuación de salud:</label>
-          <input
-            type="range"
-            max={100}
-            min={1}
-            value={form.healthScore}
-            onChange={changeHandler}
-            name="healthScore"
-          />
-        </div>
-        <div>
-          <label>Resumen:</label>
-          <input
-            type="text"
-            value={form.summary}
-            onChange={changeHandler}
-            name="summary"
-          />
-        </div>
-        <div>
-          <label>Imagen:</label>
-          <input
-            type="text"
-            value={form.image}
-            onChange={changeHandler}
-            name="image"
-          />
-        </div>
-        <div>
-          <label>Dietas:</label>
-          {data.map((diet) => {
-            return (
-              <>
-                <label>{diet}</label>
-                <input
-                  type="checkbox"
-                  value={diet}
-                  onChange={changeHandlerDietas}
-                  name="diets"
-                />
-              </>
-            );
-          })}
-        </div>
-        <div>
-          <label>Pasos:</label>
-          <input
-            type="text"
-            value={form.steps}
-            onChange={changeHandler}
-            name="steps"
-          />
-        </div>
-        <button type="submit">ENVIAR</button>
-      </form>
+      </div>
     </>
   );
 };

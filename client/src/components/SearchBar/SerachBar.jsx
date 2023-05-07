@@ -41,11 +41,11 @@ const SearchBar = () => {
       <div>
         <input
           type="text"
-          placeholder="Buscar info"
+          placeholder="Search info"
           value={search}
           onChange={handleChange}
         />
-        <input type="submit" value="Buscar" onClick={submitHandler} />
+        <input type="submit" value="Search" onClick={submitHandler} />
       </div>
 
       <div>

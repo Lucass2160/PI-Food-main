@@ -14,7 +14,7 @@ const CardsContainer = () => {
     setCurrentPage(currentPage + 9);
   };
   const prevPage = () => {
-    //document.documentElement.scrollTop = 0
+    // document.documentElement.scrollTop = 0
     if (currentPage > 0) setCurrentPage(currentPage - 9);
   };
 

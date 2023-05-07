@@ -1,0 +1,48 @@
+.containerPrincipal {
+  display: flex;
+  flex-direction: row;
+  margin: 70px 80px 0px 80px;
+  padding: 10px 30px 10px 30px;
+  border: solid black;
+  height: 100%
+}
+
+.subcontainerIzquierdo {
+  width: 550px;
+  height: 1hv;
+}
+
+.subcontainerDerecho {
+  background-color: rgb(117, 117, 119);
+  width: 30%;
+}
+
+.mincontainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input {
+  width: 280px;
+}
+
+.name {
+  display: block;
+}
+
+.enviar {
+  margin-top: 20px;
+}
+
+.medidor {
+  background-color: beige;
+}
+
+.checkBox {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-right: 40px;
+  background-color: rgb(182, 182, 182);
+}

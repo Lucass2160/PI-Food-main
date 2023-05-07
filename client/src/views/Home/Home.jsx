@@ -1,51 +1,54 @@
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
-import { useEffect } from "react";
-import Filter from './Filters/Filter';
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getAllDiet } from "../../redux/actions"
-import { getRecipes } from "../../redux/actions";
+import { useEffect, useState } from "react";
+import Filter from "./Filters/Filter";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllDiet, getRecipes } from "../../redux/actions";
 import SearchBar from "../../components/SearchBar/SerachBar";
-import("./home.css");
+import "./home.css";
 
 const Home = () => {
   const allDiet = useSelector((state) => state.diets);
-  console.log(allDiet, "dietas")  
-  console.log()
+  console.log(allDiet, "dietas");
+  console.log();
 
-  const [order, setOrder] = useState(''); //para guardar los ordenamientos
-  const [socre, setScore] = useState('');
+  const [order, setOrder] = useState(""); //para guardar los ordenamientos
+  const [score, setScore] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getRecipes());
-    dispatch(getAllDiet())
+    dispatch(getRecipes())
+      .then(() => setLoading(false))
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+
+    dispatch(getAllDiet());
   }, [dispatch]);
 
-
-
-
   return (
-    
-    <>
-      <div className="searchBar">
-        <SearchBar />
-      </div>
-
-      
-
-      <div>
-        <div>
-          <Filter diet={allDiet} setorder={setOrder} setscore={setScore} />
-          
+    <div className="container">
+      {loading ? (
+        <div className="searchingContainer">
+          <h1 className="searching">Searching Foods...</h1>
         </div>
-      </div>
+      ) : (
+        <div>
+          <div className="searchBar">
+            <SearchBar />
+          </div>
+          <div>
+            <div>
+              <Filter diet={allDiet} setorder={setOrder} setscore={setScore} />
+            </div>
+          </div>
 
-      <h1>Foods</h1>
-
-      <CardsContainer />
-    </>
+          <CardsContainer />
+        </div>
+      )}
+    </div>
   );
 };
 

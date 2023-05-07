@@ -37,49 +37,42 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case ORDER_BY_NAME:
-      /* localeCompare */
-      let sortArray =
-        action.payload === "asc"
-          ? state.recipes.sort(function (a, b) {
-              if (a.name > b.name) return 1;
-              if (a.name < b.name) {
-                return -1;
-              } else return 0;
-            })
-          : /* forma desendente DES */
-            state.recipes.sort(function (a, b) {
-              if (a.name > b.name) return -1;
-              if (a.name < b.name) return 1;
-              else return 0;
-            });
-
+      let sortAsc = action.payload === "asc";
+      const sortedRecipes = state.recipes.slice().sort(function (a, b) {
+        if (a.name > b.name) {
+          return sortAsc ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return sortAsc ? -1 : 1;
+        }
+        return 0;
+      });
       return {
         ...state,
-        allRecipes: sortArray,
-        page: 1,
+        recipes: sortedRecipes,
+        allRecipes: sortedRecipes,
       };
 
     case ORDER_BY_SCORE: {
-      let sortscore =
-        action.payload === "asc"
-          ? state.recipes.sort(function (a, b) {
-              console.log(a, "este es a");
-              if (a.healthScore > b.healthScore) return 1;
-              if (a.healthScore < b.healthScore) return -1;
-              else return 0;
-            })
-          : state.recipes.sort(function (a, b) {
-              if (a.healthScore > b.healthScore) return -1;
-              if (a.healthScore < b.healthScore) return 1;
-              else return 0;
-            });
+      const sortAsc = action.payload === "asc";
+      const sortedRecipes = state.recipes.slice().sort(function (a, b) {
+        if (a.healthScore > b.healthScore) {
+          return sortAsc ? 1 : -1;
+        }
+        if (a.healthScore < b.healthScore) {
+          return sortAsc ? -1 : 1;
+        }
+        return 0;
+      });
 
       return {
         ...state,
-        allRecipes: sortscore,
+        recipes: sortedRecipes,
+        allRecipes: sortedRecipes,
         page: 1,
       };
     }
+
     case FILTER_BY_DIET:
       const all = state.allRecipes;
       const recipesFilterdiet =
@@ -94,15 +87,22 @@ const rootReducer = (state = initialState, action) => {
 
     case FILTER_DB_OR_API: {
       const allcreated = state.allRecipes;
-      const createFilter =
-        action.payload === "created"
-          ? allcreated.filter((el) => el.createIndb === true)
-          : allcreated.filter((el) => el.createIndb === false);
+      const createFilter = allcreated.filter((el) => el.id.length > 30);
+      const apiFilter = allcreated.filter((el) => typeof el.id === "number");
+      console.log(action.payload);
+
+      let filteredRecipes = [];
+      if (action.payload === "all") {
+        filteredRecipes = state.allRecipes;
+      } else if (action.payload === "created") {
+        filteredRecipes = createFilter;
+      } else if (action.payload === "api") {
+        filteredRecipes = apiFilter;
+      }
 
       return {
         ...state,
-        recipes: action.payload === "all" ? state.allRecipes : createFilter,
-        page: 1,
+        recipes: filteredRecipes,
       };
     }
 

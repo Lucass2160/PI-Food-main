@@ -31,16 +31,15 @@ function Details() {
       {console.log(data)}
         <div key={data.id}>
           <h1>{data.name}</h1>
-          <p>Puntuacion de sanidad: {data.healScore}</p>
-          <p>Diets</p>
+          <p>Health Score: {data.healScore}</p>
           <p>{data.diet}</p>
           <img src={data.image} alt="" />
           <p>{data.summary.replace(/<\/?[^>]+(>|$)/g, "")}</p>
           {data.steps?.map((e)=>{
             return(
               <>
-              <p>Paso numero: {e.number}</p>
-              <p>nombre: {e.step}</p>
+              <p>Step number: {e.number}</p>
+              <p>{e.step}</p>
               </>
             )
           })}

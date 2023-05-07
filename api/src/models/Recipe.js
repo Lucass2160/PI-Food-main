@@ -17,11 +17,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1000),
         allowNull: false,
       },
       summary: {
-        type: DataTypes.STRING(1000),
+        type: DataTypes.STRING(300),
         allowNull: false,
       },
       healthScore: {
