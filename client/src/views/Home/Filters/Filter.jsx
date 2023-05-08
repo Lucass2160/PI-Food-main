@@ -40,7 +40,7 @@ export default function Filter({diet, setorder, setscore}) {
     <div className="container__filtros">
       {/* ------------Ordenar de a-z z-a------------ */}
       <select className="selectors" onChange={handleOderByname} name="orderaz" id="orderaz">
-        <option value="asc">A-z</option>
+        <option value="asc">A-Z</option>
         <option value="des">Z-A</option>
       </select>
       {/*-------------All dietas al select------------ */}

@@ -48,7 +48,7 @@ const SearchBar = () => {
         <input type="submit" value="Search" onClick={submitHandler} className={style.input} />
       </div>
 
-      <div>
+      <div className={style.aaa}>
         {recipes.map((elemento) => {
           return (
             <Card

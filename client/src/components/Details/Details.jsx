@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import getPageDetail from "../../redux/actions";
 import style from "./details.module.css";
+import loadSpeed from "../../img/loadSpeed.gif";
 
 function Details() {
   const dispatch = useDispatch();
@@ -21,7 +22,12 @@ function Details() {
   const data = useSelector((state) => state.details);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <h1 className={style.loading}>Loading...</h1>
+        <img className={style.load} src={loadSpeed} alt="dasds" />
+      </div>
+    );
   }
 
   return (

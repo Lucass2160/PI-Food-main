@@ -11,7 +11,7 @@ const NavBar = () => {
         Home
       </Link>
       <Link className={style.link} to="/create">
-        Form
+        Create
       </Link>
     </div>
   );

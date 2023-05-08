@@ -10,11 +10,11 @@ const CardsContainer = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const filterRecipes = recipes.slice(currentPage, currentPage + 9);
   const nextPage = () => {
-    //document.documentElement.scrollTop = 0
+    document.documentElement.scrollTop = 100
     setCurrentPage(currentPage + 9);
   };
   const prevPage = () => {
-    // document.documentElement.scrollTop = 0
+    document.documentElement.scrollTop = 100
     if (currentPage > 0) setCurrentPage(currentPage - 9);
   };
 

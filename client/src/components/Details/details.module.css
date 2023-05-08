@@ -2,7 +2,8 @@
   display: flex;
   margin: 40px;
   height: 500px;
-  background-color: rgb(65, 65, 65);
+  border-radius: 2%;
+  background-color: rgb(226, 226, 226);
 }
 
 .container {
@@ -27,7 +28,8 @@
 }
 
 .containerStep{
-    background-color: rgba(0, 0, 0, 0.126);
+    background-color: rgba(0, 0, 0, 0.028);
+    border-radius: 10%;
     font-size: 8px;
     height: 250px;
     display: flex;
@@ -48,6 +50,18 @@
   margin-right: 50px;
 }
 
+
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+}
+
+.load{
+  margin: 0;
+  width: 40px;
+}
 
 
 

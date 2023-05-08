@@ -18,12 +18,14 @@ const Form = () => {
 
   const [form, setForm] = useState({
     name: "",
-    healScore: "",
+    healthScore: "",
     summary: "",
     image: "",
     diets: [],
     steps: [],
   });
+
+  console.log(form);
 
   const changeHandler = (event) => {
     const property = event.target.name;
@@ -61,14 +63,21 @@ const Form = () => {
   };
 
   const [stepsArr, setSteps] = useState([]);
-  console.log(stepsArr);
+  console.log(stepsArr, "abc");
   const addStep = (event) => {
     event.preventDefault();
     setSteps([...stepsArr, { number: stepsArr.length + 1, step: setpp.steps }]);
     setForm({ ...form, steps: [...stepsArr] });
   };
 
-  console.log(form);
+  // const [count, setCount] = useState("");
+
+  // useEffect(() => {
+  //   const lastNumber = stepsArr[stepsArr.length - 1]?.number;
+  //   if (lastNumber) {
+  //     setCount(lastNumber);
+  //   }
+  // }, [stepsArr]);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -82,89 +91,95 @@ const Form = () => {
   return (
     <>
       <div className="containerPrincipal">
-        <form className="subcontainerIzquierdo" onSubmit={submitHandler}>
-          <div className="mincontainer">
-            <label className="name">Recipe name:</label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={changeHandler}
-              name="name"
-              className="input"
-            />
-          </div>
-          <div className="mincontainer">
-            <label className="name">Health Score:</label>
-            <input
-              type="range"
-              max={100}
-              min={1}
-              value={form.healScore}
-              onChange={changeHandler}
-              name="healScore"
-              className="input"
-            />
-          </div>
-          <div className="mincontainer">
-            <label className="name">Summary:</label>
-            <input
-              type="text"
-              value={form.summary}
-              onChange={changeHandler}
-              name="summary"
-              className="input"
-            />
-          </div>
-          <div className="mincontainer">
-            <label className="name">Image:</label>
-            <input
-              type="text"
-              value={form.image}
-              onChange={changeHandler}
-              name="image"
-              className="input"
-            />
-          </div>
+        <div className="subDiv">
+          <form className="subcontainerIzquierdo" onSubmit={submitHandler}>
+            <div className="mincontainer">
+              <label className="name">Recipe name:</label>
+              <input
+                type="text"
+                value={form.name}
+                onChange={changeHandler}
+                name="name"
+                className="input"
+              />
+            </div>
+            <div className="mincontainer">
+              <label className="name">Health Score:</label>
+              <input
+                type="range"
+                max={100}
+                min={1}
+                value={form.healthScore}
+                onChange={changeHandler}
+                name="healthScore"
+                className="input"
+              />
+            </div>
+            <div className="mincontainer">
+              <label className="name">Summary:</label>
+              <input
+                type="text"
+                value={form.summary}
+                onChange={changeHandler}
+                name="summary"
+                className="input"
+              />
+            </div>
+            <div className="mincontainer">
+              <label className="name">Image:</label>
+              <input
+                type="text"
+                value={form.image}
+                onChange={changeHandler}
+                name="image"
+                className="input"
+              />
+            </div>
 
-          <div className="check">
-            <label></label>
-          </div>
+            <div className="checkBox">
+              {data.map((diet) => {
+                return (
+                  <div className="checkchic">
+                    <input
+                      type="checkbox"
+                      value={diet}
+                      onChange={changeHandlerDietas}
+                      name="diets"
+                    />
+                    <label>{diet}</label>
+                  </div>
+                );
+              })}
+            </div>
 
-          <div className="checkBox">
-            {data.map((diet) => {
-              return (
-                <div className="checkchic">
-                  <input
-                    type="checkbox"
-                    value={diet}
-                    onChange={changeHandlerDietas}
-                    name="diets"
-                  />
-                  <label>{diet}</label>
-                </div>
-              );
-            })}
-          </div>
+          </form>
+
+          <form className="mincontainerSteps" onSubmit={addStep}>
+            <div>
+              {/* {count && count >= 1 && (
+              <> */}
+              <label className="name">Steps: </label>
+              <input
+                type="text"
+                value={setpp.steps}
+                onChange={changeHandlersetpp}
+                name="steps"
+                className="input"
+              />
+              {/* </>
+            )} */}
+            </div>
+            <div>
+              <button className="enviar" type="submit">
+                Add step
+              </button>
+            </div>
+          </form>
+
           <button className="enviar" type="submit">
-            ENVIAR
-          </button>
-        </form>
-
-        <form className="mincontainer" onSubmit={addStep}>
-          <label className="name">Steps: 3</label>
-          <input
-            type="text"
-            value={setpp.steps}
-            onChange={changeHandlersetpp}
-            name="steps"
-            className="input"
-          />
-          <div>
-            <button className="enviar" type="submit">
-              Add step
+              ENVIAR
             </button>
-          </div>
-        </form>
+        </div>
 
         <div className="subcontainerDerecho">
           <img src="../../img/food.png" alt="" />
