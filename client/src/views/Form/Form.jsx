@@ -8,6 +8,38 @@ import "./form.css";
 
 // import validation from "./validaciones";
 
+const validate = (form) => {
+  const error = {};
+  if (form.name) {
+    if (form.name.length < 5) {
+      error.name = "El numero debe tener mas de 5 caracteres";
+    } else if (form.name.length > 20) {
+      error.name = "El nombre de debe tener mas de 20 caracteres";
+    } else if (!/^[a-zA-Z0-9 ,.!?¿¡]+$/i.test(form.name)) {
+      error.name = "El nombre contiene caracteres no válidos.";
+    }
+  }
+  
+
+  if (form.summary) {
+    if (form.summary.length < 10) {
+      error.summary = "El resumen es demasiado corto";
+    } else if (form.summary.length > 299) {
+      error.summary = "El resumen es demasiado largo.";
+    } else if (!/^[a-zA-Z0-9 ,.!?¿¡]+$/i.test(form.summary)) {
+      error.summary = "El resumen contiene caracteres no válidos.";
+    }
+  }
+
+  if (form.diets) {
+    if (form.diets.length === 0) {
+      error.diets = "Debe seleccionar una receta";
+    }
+  }
+
+  return error;
+};
+
 const Form = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,31 +57,35 @@ const Form = () => {
     steps: [],
   });
 
+  const [error, setError] = useState({
+    name: "",
+    healthScore: "",
+    summary: "",
+    image: "",
+    diets: [],
+    steps: [],
+  });
   console.log(form);
-
-  const changeHandler = (event) => {
-    const property = event.target.name;
-    const value = event.target.value;
-    setForm({ ...form, [property]: value });
-  };
-
-  const [check, setCheck] = useState([]);
-  console.log(check, "1");
 
   const changeHandlerDietas = (event) => {
     const value = event.target.value;
     const property = event.target.name;
 
     if (event.target.checked) {
-      setCheck([...check, value]);
       setForm({ ...form, [property]: [...form[property], value] });
     } else {
-      setCheck(check.filter((item) => item !== value));
       setForm({
         ...form,
         [property]: form[property].filter((item) => item !== value),
       });
     }
+  };
+
+  const changeHandler = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [property]: value });
+    setError(validate({ ...form, [property]: value }));
   };
 
   const [setpp, setsepp] = useState({
@@ -66,26 +102,30 @@ const Form = () => {
   console.log(stepsArr, "abc");
   const addStep = (event) => {
     event.preventDefault();
-    setSteps([...stepsArr, { number: stepsArr.length + 1, step: setpp.steps }]);
-    setForm({ ...form, steps: [...stepsArr] });
+    const newStep = { number: stepsArr.length + 1, step: setpp.steps };
+    setSteps([...stepsArr, newStep]);
+    setForm({ ...form, steps: [...stepsArr, newStep] });
   };
 
-  // const [count, setCount] = useState("");
+  const [count, setCount] = useState("");
 
-  // useEffect(() => {
-  //   const lastNumber = stepsArr[stepsArr.length - 1]?.number;
-  //   if (lastNumber) {
-  //     setCount(lastNumber);
-  //   }
-  // }, [stepsArr]);
+  useEffect(() => {
+    const lastNumber = stepsArr[stepsArr.length - 1]?.number;
+    if (lastNumber) {
+      setCount(lastNumber);
+    }
+  }, [stepsArr]);
 
   const submitHandler = (event) => {
+    setError(validate({ ...form, form }));
     event.preventDefault();
-
-    axios
-
-      .post("http://localhost:3001/recipes", form)
-      .then(() => alert("Se envio correctamente"));
+    if (!Object.keys(error).length) {
+      axios
+        .post("http://localhost:3001/recipes", form)
+        .then(() => alert("The recipe was created successfully"));
+    } else {
+      alert("Complete the required fields (*)");
+    }
   };
 
   return (
@@ -94,7 +134,7 @@ const Form = () => {
         <div className="subDiv">
           <form className="subcontainerIzquierdo" onSubmit={submitHandler}>
             <div className="mincontainer">
-              <label className="name">Recipe name:</label>
+              <label className="name">Recipe name *:</label>
               <input
                 type="text"
                 value={form.name}
@@ -103,8 +143,11 @@ const Form = () => {
                 className="input"
               />
             </div>
+
+            {error.name && <p className="errors">{error.name}</p>}
+
             <div className="mincontainer">
-              <label className="name">Health Score:</label>
+              <label className="name">Health Score* :</label>
               <input
                 type="range"
                 max={100}
@@ -115,8 +158,9 @@ const Form = () => {
                 className="input"
               />
             </div>
+
             <div className="mincontainer">
-              <label className="name">Summary:</label>
+              <label className="name">Summary* :</label>
               <input
                 type="text"
                 value={form.summary}
@@ -125,6 +169,9 @@ const Form = () => {
                 className="input"
               />
             </div>
+
+            {error.summary && <p className="errors">{error.summary}</p>}
+
             <div className="mincontainer">
               <label className="name">Image:</label>
               <input
@@ -135,6 +182,10 @@ const Form = () => {
                 className="input"
               />
             </div>
+
+            <p className="selecDiets">Select the diets *:</p>
+
+            {error.diets && <p className="errors">{error.diets}</p>}
 
             <div className="checkBox">
               {data.map((diet) => {
@@ -152,13 +203,14 @@ const Form = () => {
               })}
             </div>
 
+            <button className="enviar" type="submit">
+              ENVIAR
+            </button>
           </form>
 
           <form className="mincontainerSteps" onSubmit={addStep}>
             <div>
-              {/* {count && count >= 1 && (
-              <> */}
-              <label className="name">Steps: </label>
+              <label className="name">Steps: {count + 1} </label>
               <input
                 type="text"
                 value={setpp.steps}
@@ -166,19 +218,13 @@ const Form = () => {
                 name="steps"
                 className="input"
               />
-              {/* </>
-            )} */}
             </div>
             <div>
-              <button className="enviar" type="submit">
+              <button className="enviar2" type="submit">
                 Add step
               </button>
             </div>
           </form>
-
-          <button className="enviar" type="submit">
-              ENVIAR
-            </button>
         </div>
 
         <div className="subcontainerDerecho">
