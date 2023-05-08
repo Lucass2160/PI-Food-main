@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllDiet, getRecipes } from "../../redux/actions";
 import SearchBar from "../../components/SearchBar/SerachBar";
 import "./home.css";
+import load from "../../img/load.gif"
 
 const Home = () => {
   const allDiet = useSelector((state) => state.diets);
@@ -33,6 +34,7 @@ const Home = () => {
       {loading ? (
         <div className="searchingContainer">
           <h1 className="searching">Searching Foods...</h1>
+          <img className="load" src={load} alt="" />
         </div>
       ) : (
         <div>

@@ -3,11 +3,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import getPageDetail from "../../redux/actions";
+import style from "./details.module.css";
 
 function Details() {
-  
-
-
   const dispatch = useDispatch();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -27,23 +25,30 @@ function Details() {
   }
 
   return (
-    <div>
-      {console.log(data)}
-        <div key={data.id}>
-          <h1>{data.name}</h1>
-          <p>Health Score: {data.healScore}</p>
-          <p>{data.diet}</p>
-          <img src={data.image} alt="" />
-          <p>{data.summary.replace(/<\/?[^>]+(>|$)/g, "")}</p>
-          {data.steps?.map((e)=>{
-            return(
-              <>
-              <p>Step number: {e.number}</p>
-              <p>{e.step}</p>
-              </>
-            )
+    <div className={style.containerPrincipal}>
+      {console.log(data, "esto es data")}
+      <div className={style.container} key={data.id}>
+        <h1 className={style.name}>{data.name}</h1>
+        <p className={style.heal}>Health Score: {data.healScore}</p>
+        <p className={style.diets}>{data.diet}</p>
+        <p className={style.summary}>
+          {data.summary.replace(/<\/?[^>]+(>|$)/g, "")}
+        </p>
+        <div className={style.containerStep}>
+          {data.steps?.map((e) => {
+            return (
+              <div className={style.stepContainer}>
+                <p className={style.stepNumber}>Step number: {e.number}</p>{" "}
+                <p className={style.step}>{e.step}</p>
+                {console.log(e.step, "step")}
+              </div>
+            );
           })}
         </div>
+      </div>
+      <div className={style.containerImg}>
+        <img className={style.img} src={data.image} alt="" />
+      </div>
     </div>
   );
 }

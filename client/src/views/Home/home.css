@@ -3,12 +3,16 @@
   justify-content: center;
   align-items: center;
 }
-.searchbar {
-  margin: 10px;
+
+.searchBar{
+  margin-top: 15px;
 }
 
-.searchingContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.searchingContainer {
+  display: flex;
+margin-top: 130px;
+}
+
+.load {
+  width: 80px;
 }

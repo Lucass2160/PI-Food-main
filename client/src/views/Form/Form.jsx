@@ -5,12 +5,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllDiet } from "../../redux/actions";
 import "./form.css";
-import {
-  validarFoto,
-  validarResumen,
-  validarNumero,
-  validarDietas,
-} from "../../views/Home/validacion/Validation";
+
 // import validation from "./validaciones";
 
 const Form = () => {
@@ -23,13 +18,12 @@ const Form = () => {
 
   const [form, setForm] = useState({
     name: "",
-    healthScore: "",
+    healScore: "",
     summary: "",
     image: "",
     diets: [],
-    steps: "",
+    steps: [],
   });
-  console.log(form);
 
   const changeHandler = (event) => {
     const property = event.target.name;
@@ -56,9 +50,31 @@ const Form = () => {
     }
   };
 
+  const [setpp, setsepp] = useState({
+    steps: "",
+  });
+
+  const changeHandlersetpp = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+    setsepp({ ...setpp, [property]: value });
+  };
+
+  const [stepsArr, setSteps] = useState([]);
+  console.log(stepsArr);
+  const addStep = (event) => {
+    event.preventDefault();
+    setSteps([...stepsArr, { number: stepsArr.length + 1, step: setpp.steps }]);
+    setForm({ ...form, steps: [...stepsArr] });
+  };
+
+  console.log(form);
+
   const submitHandler = (event) => {
     event.preventDefault();
+
     axios
+
       .post("http://localhost:3001/recipes", form)
       .then(() => alert("Se envio correctamente"));
   };
@@ -83,9 +99,9 @@ const Form = () => {
               type="range"
               max={100}
               min={1}
-              value={form.healthScore}
+              value={form.healScore}
               onChange={changeHandler}
-              name="healthScore"
+              name="healScore"
               className="input"
             />
           </div>
@@ -109,19 +125,11 @@ const Form = () => {
               className="input"
             />
           </div>
+
           <div className="check">
             <label></label>
           </div>
-          <div className="mincontainer">
-            <label className="name">Steps:</label>
-            <input
-              type="text"
-              value={form.steps}
-              onChange={changeHandler}
-              name="steps"
-              className="input"
-            />
-          </div>
+
           <div className="checkBox">
             {data.map((diet) => {
               return (
@@ -141,6 +149,23 @@ const Form = () => {
             ENVIAR
           </button>
         </form>
+
+        <form className="mincontainer" onSubmit={addStep}>
+          <label className="name">Steps: 3</label>
+          <input
+            type="text"
+            value={setpp.steps}
+            onChange={changeHandlersetpp}
+            name="steps"
+            className="input"
+          />
+          <div>
+            <button className="enviar" type="submit">
+              Add step
+            </button>
+          </div>
+        </form>
+
         <div className="subcontainerDerecho">
           <img src="../../img/food.png" alt="" />
         </div>

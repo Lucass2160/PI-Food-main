@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Card from "../Card/Card";
+import style from "./searchbar.module.css"
 
 const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
@@ -8,9 +9,8 @@ const SearchBar = () => {
   const [search, setSearch] = useState("");
 
   const reset = () => {
-
     return window.location.reload();
-  }
+  };
 
   const buscar = (search) => {
     if (search === "") {
@@ -45,22 +45,24 @@ const SearchBar = () => {
           value={search}
           onChange={handleChange}
         />
-        <input type="submit" value="Search" onClick={submitHandler} />
+        <input type="submit" value="Search" onClick={submitHandler} className={style.input} />
       </div>
 
       <div>
         {recipes.map((elemento) => {
-          return <Card name={elemento.name}
-          image= {elemento.image}
-          diets= {elemento.diets} />;
+          return (
+            <Card
+              name={elemento.name}
+              image={elemento.image}
+              diets={elemento.diets}
+            />
+          );
         })}
       </div>
 
       {Object.keys(recipes).length > 0 ? (
-        <input type="submit" onClick={reset} value="Reset" />
+        <input type="submit" onClick={reset} value="Reset"  />
       ) : null}
-
-      
     </>
   );
 };
