@@ -11,7 +11,8 @@
 .subcontainerIzquierdo {
   width: 550px;
   height: 300px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .subcontainerDerecho {
@@ -27,7 +28,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-
 }
 
 .mincontainerSteps {
@@ -35,6 +35,8 @@
   justify-content: center;
   height: 60px;
   flex-direction: row;
+  margin-top: 5px;
+  margin-right: 20px;
 }
 
 .input {
@@ -45,10 +47,6 @@
   display: block;
 }
 
-.enviar {
-  margin-top: 20px;
-}
-
 .medidor {
   background-color: beige;
 }
@@ -57,9 +55,43 @@
   display: flex;
   flex-wrap: wrap;
   margin-left: 20px;
-  margin-top: 25px; 
-  width: 100%;
-  height: 100px; 
+  margin-top: 25px;
+  width: 92%;
+  height: 100px;
+  background-color: rgb(162, 162, 162);
+  border-radius: 5px;
 }
 
+.errors {
+  margin: 4px;
+  font-size: 10px;
+  color: red;
+}
 
+.selecDiets {
+  margin: 0px;
+  margin-top: 2px;
+}
+
+.enviar {
+  position: absolute;
+  margin-top: 360px;
+  margin-left: 460px;
+}
+
+.enviar:hover {
+  cursor: pointer;
+}
+
+.enviar2 {
+  position: absolute;
+  margin-top: 18px;
+}
+
+.enviar2 {
+  cursor: pointer;
+}
+
+.checkchic {
+  margin-top: 10px;
+}

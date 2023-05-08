@@ -35,7 +35,7 @@ function Details() {
       {console.log(data, "esto es data")}
       <div className={style.container} key={data.id}>
         <h1 className={style.name}>{data.name}</h1>
-        <p className={style.heal}>Health Score: {data.healScore}</p>
+        <p className={style.heal}>Health Score: {data.healthScore}</p>
         <p className={style.diets}>{data.diet}</p>
         <p className={style.summary}>
           {data.summary.replace(/<\/?[^>]+(>|$)/g, "")}

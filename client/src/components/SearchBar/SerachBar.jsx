@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Card from "../Card/Card";
-import style from "./searchbar.module.css"
+import style from "./searchbar.module.css";
 
 const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
@@ -12,6 +12,8 @@ const SearchBar = () => {
     return window.location.reload();
   };
 
+  const [error, setError] = useState([]);
+
   const buscar = (search) => {
     if (search === "") {
       alert("Ingrese una receta");
@@ -21,7 +23,7 @@ const SearchBar = () => {
         .then((res) => {
           setRecipes(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => setError("No se encontro en la base de datos"));
     }
   };
 
@@ -45,23 +47,32 @@ const SearchBar = () => {
           value={search}
           onChange={handleChange}
         />
-        <input type="submit" value="Search" onClick={submitHandler} className={style.input} />
+        <input
+          type="submit"
+          value="Search"
+          onClick={submitHandler}
+          className={style.input}
+        />
       </div>
 
       <div className={style.aaa}>
-        {recipes.map((elemento) => {
-          return (
-            <Card
-              name={elemento.name}
-              image={elemento.image}
-              diets={elemento.diets}
-            />
-          );
-        })}
+        {error ? (
+          <div><p>No se encontro </p></div>
+        ) : (
+          recipes.map((elemento) => {
+            return (
+              <Card
+                name={elemento.name}
+                image={elemento.image}
+                diets={elemento.diets}
+              />
+            );
+          })
+        )}
       </div>
 
       {Object.keys(recipes).length > 0 ? (
-        <input type="submit" onClick={reset} value="Reset"  />
+        <input type="submit" onClick={reset} value="Reset" />
       ) : null}
     </>
   );

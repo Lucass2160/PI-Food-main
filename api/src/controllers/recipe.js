@@ -14,11 +14,11 @@ const getIdRecipeController = async (id) => {
     });
     return {
       id: dbRecipe.id,
-      name: dbRecipe.title,
+      name: dbRecipe.name,
       steps: dbRecipe.steps,
       image: dbRecipe.image,
       summary: dbRecipe.summary,
-      healthScore: dbRecipe.healScore,
+      healthScore: dbRecipe.healthScore,
     };
   } else {
     const { data } = await axios(
@@ -29,7 +29,7 @@ const getIdRecipeController = async (id) => {
       name: data.title,
       image: data.image,
       summary: data.summary,
-      healScore: data.healthScore,
+      healthScore: data.healthScore,
       steps: data.analyzedInstructions[0]?.steps.map((e) => {
         return {
           number: e.number,
