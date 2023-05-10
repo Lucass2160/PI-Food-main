@@ -9,25 +9,20 @@ import "./form.css";
 // import validation from "./validaciones";
 
 const validate = (form) => {
-  const error = {};
-  if (form.name) {
+  let error = {};
+  if (form.name || form.name === "") {
     if (form.name.length < 5) {
       error.name = "El numero debe tener mas de 5 caracteres";
     } else if (form.name.length > 20) {
       error.name = "El nombre de debe tener mas de 20 caracteres";
-    } else if (!/^[a-zA-Z0-9 ,.!?¿¡]+$/i.test(form.name)) {
-      error.name = "El nombre contiene caracteres no válidos.";
     }
   }
-  
 
-  if (form.summary) {
+  if (form.summary || form.summary === "") {
     if (form.summary.length < 10) {
       error.summary = "El resumen es demasiado corto";
     } else if (form.summary.length > 299) {
       error.summary = "El resumen es demasiado largo.";
-    } else if (!/^[a-zA-Z0-9 ,.!?¿¡]+$/i.test(form.summary)) {
-      error.summary = "El resumen contiene caracteres no válidos.";
     }
   }
 
@@ -50,42 +45,40 @@ const Form = () => {
 
   const [form, setForm] = useState({
     name: "",
-    healthScore: "",
+    healthScore: 50,
     summary: "",
     image: "",
     diets: [],
     steps: [],
   });
 
-  const [error, setError] = useState({
-    name: "",
-    healthScore: "",
-    summary: "",
-    image: "",
-    diets: [],
-    steps: [],
-  });
   console.log(form);
 
-  const changeHandlerDietas = (event) => {
-    const value = event.target.value;
-    const property = event.target.name;
+  const [error, setError] = useState({
+    ...form,
+  });
 
-    if (event.target.checked) {
-      setForm({ ...form, [property]: [...form[property], value] });
-    } else {
-      setForm({
-        ...form,
-        [property]: form[property].filter((item) => item !== value),
-      });
-    }
+  console.log(error);
+
+  const changeHandlerDietas = (event) => {
+    const { name, value, checked } = event.target;
+    setForm((prevForm) => {
+      const updatedProperty = checked
+        ? [...prevForm[name], value]
+        : prevForm[name].filter((item) => item !== value);
+
+      const updatedForm = { ...prevForm, [name]: updatedProperty };
+
+      setError(validate(updatedForm));
+
+      return updatedForm;
+    });
   };
 
   const changeHandler = (event) => {
-    const property = event.target.name;
-    const value = event.target.value;
-    setForm({ ...form, [property]: value });
-    setError(validate({ ...form, [property]: value }));
+    console.log(event.target.value, "SOY EL STRING");
+    setError(validate({ ...form, [event.target.name]: event.target.value }));
+    setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   const [setpp, setsepp] = useState({
@@ -137,7 +130,6 @@ const Form = () => {
               <label className="name">Recipe name *:</label>
               <input
                 type="text"
-                value={form.name}
                 onChange={changeHandler}
                 name="name"
                 className="input"
@@ -190,7 +182,7 @@ const Form = () => {
             <div className="checkBox">
               {data.map((diet) => {
                 return (
-                  <div className="checkchic">
+                  <div key={diet} className="checkchic">
                     <input
                       type="checkbox"
                       value={diet}

@@ -8,14 +8,25 @@ const CardsContainer = () => {
   const recipes = useSelector((state) => state.recipes);
   //Paginado
   const [currentPage, setCurrentPage] = useState(0);
-  const filterRecipes = recipes.slice(currentPage, currentPage + 9);
+  const recipesPerPage = 9;
+  const filterRecipes = recipes.slice(
+    currentPage,
+    currentPage + recipesPerPage
+  );
+  const totalPages = Math.ceil(recipes.length / recipesPerPage);
+
   const nextPage = () => {
-    document.documentElement.scrollTop = 100
-    setCurrentPage(currentPage + 9);
+    if (currentPage + recipesPerPage < recipes.length) {
+      setCurrentPage(currentPage + recipesPerPage);
+      document.documentElement.scrollTop = 100;
+    }
   };
+
   const prevPage = () => {
-    document.documentElement.scrollTop = 100
-    if (currentPage > 0) setCurrentPage(currentPage - 9);
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - recipesPerPage);
+      document.documentElement.scrollTop = 100;
+    }
   };
 
   return (
@@ -42,8 +53,12 @@ const CardsContainer = () => {
         })}
       </div>
       <div className="clicks">
-        <button className="button" onClick={prevPage}>Anterior</button>
-        <button className="button" onClick={nextPage}>Siguiente</button>
+        <button className="button" onClick={prevPage}>
+          Anterior
+        </button>
+        <button className="button" onClick={nextPage}>
+          Siguiente
+        </button>
       </div>
     </>
   );
