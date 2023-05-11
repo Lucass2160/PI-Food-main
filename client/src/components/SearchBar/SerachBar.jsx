@@ -5,6 +5,7 @@ import style from "./searchbar.module.css";
 
 const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
+  console.log(recipes, "recipes");
 
   const [search, setSearch] = useState("");
 
@@ -12,7 +13,7 @@ const SearchBar = () => {
     return window.location.reload();
   };
 
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(null);
 
   const buscar = async (search) => {
     if (search === "") {
@@ -40,8 +41,6 @@ const SearchBar = () => {
     setSearch("");
   };
 
-  const [cerrar, setCerrar] = useState([false]);
-
   return (
     <>
       <div>
@@ -60,9 +59,8 @@ const SearchBar = () => {
       </div>
 
       <div className={style.aaa}>
-        {console.log(recipes.length)}
-        {recipes.length === 0 && search > 10 ? (
-          <p> No se encontro </p>
+        {error ? (
+          <p> {error} </p>
         ) : (
           recipes?.map((elemento) => {
             return (
