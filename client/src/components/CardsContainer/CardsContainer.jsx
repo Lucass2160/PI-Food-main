@@ -13,7 +13,6 @@ const CardsContainer = () => {
     currentPage,
     currentPage + recipesPerPage
   );
-  const totalPages = Math.ceil(recipes.length / recipesPerPage);
 
   const nextPage = () => {
     if (currentPage + recipesPerPage < recipes.length) {

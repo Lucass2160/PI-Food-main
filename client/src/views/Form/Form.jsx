@@ -4,36 +4,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllDiet } from "../../redux/actions";
+import validate from "./validacionForm";
 import "./form.css";
 
-// import validation from "./validaciones";
 
-const validate = (form) => {
-  let error = {};
-  if (form.name || form.name === "") {
-    if (form.name.length < 5) {
-      error.name = "El numero debe tener mas de 5 caracteres";
-    } else if (form.name.length > 20) {
-      error.name = "El nombre de debe tener mas de 20 caracteres";
-    }
-  }
 
-  if (form.summary || form.summary === "") {
-    if (form.summary.length < 10) {
-      error.summary = "El resumen es demasiado corto";
-    } else if (form.summary.length > 299) {
-      error.summary = "El resumen es demasiado largo.";
-    }
-  }
 
-  if (form.diets) {
-    if (form.diets.length === 0) {
-      error.diets = "Debe seleccionar una receta";
-    }
-  }
-
-  return error;
-};
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -58,7 +34,6 @@ const Form = () => {
     ...form,
   });
 
-  console.log(error);
 
   const changeHandlerDietas = (event) => {
     const { name, value, checked } = event.target;
