@@ -29,6 +29,7 @@ const SearchBar = () => {
         });
     }
   };
+  
 
   /** MANEJADORES DE EVENTOS **/
   const handleChange = (e) => {

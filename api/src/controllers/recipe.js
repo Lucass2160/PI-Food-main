@@ -1,7 +1,6 @@
 const axios = require("axios");
 const { Recipe, Diets } = require("../db");
 const { dbApi } = require("../controllers/mapeos");
-const { where } = require("sequelize");
 const { API_KEY } = process.env;
 
 const getIdRecipeController = async (id) => {
