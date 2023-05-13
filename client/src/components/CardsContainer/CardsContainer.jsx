@@ -13,19 +13,15 @@ const CardsContainer = () => {
     currentPage,
     currentPage + recipesPerPage
   );
+  const totalPages = Math.ceil(recipes.length / recipesPerPage);
 
   const nextPage = () => {
-    if (currentPage + recipesPerPage < recipes.length) {
-      setCurrentPage(currentPage + recipesPerPage);
-      document.documentElement.scrollTop = 100;
-    }
+    document.documentElement.scrollTop = 100
+    setCurrentPage(currentPage + 9);
   };
-
   const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - recipesPerPage);
-      document.documentElement.scrollTop = 100;
-    }
+    document.documentElement.scrollTop = 100
+    if (currentPage > 0) setCurrentPage(currentPage - 9);
   };
 
   return (
@@ -52,12 +48,8 @@ const CardsContainer = () => {
         })}
       </div>
       <div className="clicks">
-        <button className="button" onClick={prevPage}>
-          Anterior
-        </button>
-        <button className="button" onClick={nextPage}>
-          Siguiente
-        </button>
+        <button className="button" onClick={prevPage}>Anterior</button>
+        <button className="button" onClick={nextPage}>Siguiente</button>
       </div>
     </>
   );

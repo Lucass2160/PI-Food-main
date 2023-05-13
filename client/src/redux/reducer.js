@@ -35,7 +35,6 @@ const rootReducer = (state = initialState, action) => {
         diets: action.payload,
       };
     }
-
     case ORDER_BY_NAME:
       let sortAsc = action.payload === "asc";
       const sortedRecipes = state.recipes.slice().sort(function (a, b) {
