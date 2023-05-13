@@ -27,7 +27,6 @@ const SearchBar = () => {
         .catch((err) => setError("No se encontro en la base de datos"));
     }
   };
-  
 
   /** MANEJADORES DE EVENTOS **/
   const handleChange = (e) => {

@@ -7,7 +7,8 @@ searchInApi = async () => {
     // const searchInApiRequest = await axios(`https://run.mocky.io/v3/84b3f19c-7642-4552-b69c-c53742badee5`)
     //https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100
     const searchInApiRequest = await axios(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
+      `https://run.mocky.io/v3/84b3f19c-7642-4552-b69c-c53742badee5`,
+      { headers: { "Accept-Encoding": "gzip,deflate,compress" } }
     );
     // PARA LOS LLAMADOS LIMITADOS, USAR ESTO PARA LA CORRECCION
 
