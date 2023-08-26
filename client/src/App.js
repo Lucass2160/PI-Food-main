@@ -7,7 +7,7 @@ import { Route, useLocation } from "react-router-dom";
 function App() {
   const location = useLocation();
   return (
-    <div className="App">
+    <div>
       {location.pathname !== "/" && <NavBar />}
       <Route exact path="/">
         <Landing />

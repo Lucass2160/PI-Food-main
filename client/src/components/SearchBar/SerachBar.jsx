@@ -15,18 +15,21 @@ const SearchBar = () => {
 
   const [error, setError] = useState(null);
 
-  const buscar = (search) => {
+  const buscar = async (search) => {
     if (search === "") {
       alert("Ingrese una receta");
     } else {
-      axios
+      await axios
         .get(`http://localhost:3001/recipes?name=${search}`)
         .then((res) => {
           setRecipes(res.data);
         })
-        .catch((err) => setError("No se encontro en la base de datos"));
+        .catch((err) => {
+          setError("No se encontro en la base de datos");
+        });
     }
   };
+  
 
   /** MANEJADORES DE EVENTOS **/
   const handleChange = (e) => {
@@ -57,13 +60,13 @@ const SearchBar = () => {
       </div>
 
       <div className={style.aaa}>
-        {console.log(recipes.length)}
-        {recipes.length === 0 && search > 10 ? (
-          <p> No se encontro </p>
+        {error ? (
+          <p> {error} </p>
         ) : (
-          recipes.map((elemento) => {
+          recipes?.map((elemento) => {
             return (
               <Card
+                key={elemento.id}
                 name={elemento.name}
                 image={elemento.image}
                 diets={elemento.diets}
@@ -74,7 +77,7 @@ const SearchBar = () => {
       </div>
 
       {Object.keys(recipes).length > 0 ? (
-        <input type="submit" onClick={reset} value="Reset" />
+        <input type="submit" onClick={reset} value="X" />
       ) : null}
     </>
   );
