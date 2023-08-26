@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 const Landing = () => {
   return (
-    <div className={style.fondo}>
-      <div className={style.link_container}>
-        <h1 className={style.text}>FOODS</h1>
-        <Link className={style.link_button} to="/home">
+    <div>
+      <div>
+        <h1>FOODS</h1>
+        <Link to="/home">
           <button className="button">Home</button>
         </Link>
       </div>
