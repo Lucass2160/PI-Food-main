@@ -31,7 +31,7 @@ const getRecipeByName = async (req, res) => {
     const nameRecipe = await getNameRecipeController(name);
     res.status(200).json(nameRecipe);
   } catch (error) {
-    res.status(404).json({ error: "no se encontro" });
+    res.status(404).json({ error: "caca" });
   }
 };
 

@@ -26,6 +26,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: action.payload,
+        page: state.page < action.payload.length ? state.page : 1,
       };
     }
 
@@ -68,6 +69,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         recipes: sortedRecipes,
         allRecipes: sortedRecipes,
+        page: 1,
       };
     }
 
@@ -80,6 +82,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: [...recipesFilterdiet],
+        page: state.page < recipesFilterdiet.length ? state.page : 1,
       };
 
     case FILTER_DB_OR_API: {

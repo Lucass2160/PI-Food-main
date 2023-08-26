@@ -76,7 +76,7 @@ const getNameRecipeController = async (name) => {
       const all = await dbApi();
       return all;
     }
-    throw new Error("no hay info de la receta");
+    throw new Error(`We don't have data about this recipe`);
   } catch (error) {
     return error.message;
   }

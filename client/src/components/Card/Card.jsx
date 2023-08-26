@@ -5,8 +5,10 @@ const Card = ({ name, image, diets }) => {
   function primeraLetraMayusculaYComa(array) {
     return array?.map(function(elemento, index) {
       if (index === array.length - 1) {
+        // Si es el último elemento, solo se capitaliza la primera letra sin agregar una coma
         return elemento.charAt(0).toUpperCase() + elemento.slice(1);
       } else {
+        // Si no es el último elemento, se capitaliza la primera letra y se agrega una coma al final
         return elemento.charAt(0).toUpperCase() + elemento.slice(1) + ",";
       }
     }).join(" ");
