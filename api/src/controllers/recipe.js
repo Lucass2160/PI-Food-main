@@ -20,9 +20,9 @@ const getIdRecipeController = async (id) => {
       healthScore: dbRecipe.healthScore,
     };
   } else {
-    const { data } = await axios(
-      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
-    );
+    const apiKey = "696089fb6039476898d13d9531f3a81a";
+    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`;
+    const { data } = await axios(url);
     return {
       id: data.id,
       name: data.title,
