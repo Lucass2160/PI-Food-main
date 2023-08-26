@@ -19,6 +19,7 @@ searchInApi = async () => {
         diets: element.diets?.map((element) => element),
         healthScore: element.healthScore,
         summary: element.summary.replaceAll(/<(“[^”]”|'[^’]’|[^'”>])*>/g, ""),
+        dishTypes: element.dishTypes?.map((element) => element),
         steps: element.analyzedInstructions[0]?.steps
           .map((element) => `${element.number} ${element.step}`)
           .join(" "),
@@ -52,6 +53,7 @@ const searchInDb = async () => {
         diets: element.diets?.map((element) => element.name),
         summary: element.summary,
         steps: element.steps,
+        createdInDb: element.createdInDb,
       };
     });
     return infoDb;

@@ -7,6 +7,8 @@ import { getAllDiet } from "../../redux/actions";
 import validate from "./validacionForm";
 import "./form.css";
 
+// import validation from "./validaciones";
+
 
 
 
@@ -21,39 +23,43 @@ const Form = () => {
 
   const [form, setForm] = useState({
     name: "",
-    healthScore: 50,
+    healthScore: "",
     summary: "",
     image: "",
     diets: [],
     steps: [],
   });
 
-  console.log(form);
-
   const [error, setError] = useState({
-    ...form,
+    name: "",
+    healthScore: "",
+    summary: "",
+    image: "",
+    diets: [],
+    steps: [],
   });
 
+  console.log(error);
 
   const changeHandlerDietas = (event) => {
-    const { name, value, checked } = event.target;
-    setForm((prevForm) => {
-      const updatedProperty = checked
-        ? [...prevForm[name], value]
-        : prevForm[name].filter((item) => item !== value);
+    const value = event.target.value;
+    const property = event.target.name;
 
-      const updatedForm = { ...prevForm, [name]: updatedProperty };
-
-      setError(validate(updatedForm));
-
-      return updatedForm;
-    });
+    if (event.target.checked) {
+      setForm({ ...form, [property]: [...form[property], value] });
+    } else {
+      setForm({
+        ...form,
+        [property]: form[property].filter((item) => item !== value),
+      });
+    }
   };
 
   const changeHandler = (event) => {
-    console.log(event.target.value, "SOY EL STRING");
-    setError(validate({ ...form, [event.target.name]: event.target.value }));
-    setForm({ ...form, [event.target.name]: event.target.value });
+    const property = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [property]: value });
+    setError(validate({ ...form, [property]: value }));
   };
 
   const [setpp, setsepp] = useState({
@@ -105,6 +111,7 @@ const Form = () => {
               <label className="name">Recipe name *:</label>
               <input
                 type="text"
+                value={form.name}
                 onChange={changeHandler}
                 name="name"
                 className="input"
@@ -157,7 +164,7 @@ const Form = () => {
             <div className="checkBox">
               {data.map((diet) => {
                 return (
-                  <div key={diet} className="checkchic">
+                  <div className="checkchic">
                     <input
                       type="checkbox"
                       value={diet}
